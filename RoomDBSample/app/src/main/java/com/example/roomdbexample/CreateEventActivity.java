@@ -45,10 +45,12 @@ public class CreateEventActivity extends AppCompatActivity {
         EditText title = findViewById(R.id.event_title_edit);
         EditText date = findViewById(R.id.event_date);
 
-        EventDb db = Room.databaseBuilder(getApplicationContext(),
+        EventRepository repo = EventRepository.getInstance(getApplicationContext());
+
+        /*EventDb db = Room.databaseBuilder(getApplicationContext(),
                 EventDb.class, EventDb.DATABASE_NAME).allowMainThreadQueries().build();
 
-        EventDao dao = db.eventDao();
+        EventDao dao = db.eventDao();*/
 
         createBtn.setOnClickListener((view) -> {
             String titleStr = title.getText().toString();
@@ -58,7 +60,7 @@ public class CreateEventActivity extends AppCompatActivity {
                 Log.i("DEBUG", "EMPTY VALUES");
                 return;
             }
-            dao.insertEvent(new Event(titleStr, dateStr, images.get(typeKey)));
+            repo.insertEvent(new Event(titleStr, dateStr, images.get(typeKey)));
             title.setText("");
             date.setText("");
             Toast.makeText(this, "Event Created", Toast.LENGTH_LONG).show();

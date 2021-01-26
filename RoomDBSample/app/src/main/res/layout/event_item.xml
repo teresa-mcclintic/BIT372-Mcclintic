@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
 
     <ImageView
         android:id="@+id/event_img_holder"
@@ -12,10 +12,7 @@
         android:layout_height="64dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/event_title_text"
@@ -24,11 +21,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
+        android:text="@string/event"
         android:textColor="#5A5A5A"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/event_img_holder"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/event_date_text"
@@ -37,8 +32,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
-        android:textColor="#606060"
-        app:layout_constraintStart_toEndOf="@+id/event_img_holder"
-        app:layout_constraintTop_toBottomOf="@+id/event_title_text" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:text="@string/date"
+        android:textColor="#606060" />
+</LinearLayout>
