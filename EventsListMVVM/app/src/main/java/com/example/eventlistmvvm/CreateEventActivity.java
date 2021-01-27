@@ -43,8 +43,8 @@ public class CreateEventActivity extends AppCompatActivity {
         Button createBtn = findViewById(R.id.create_btn);
         EditText title = findViewById(R.id.event_title_edit);
         EditText date = findViewById(R.id.event_date);
-        
-        // TODO: Create a repo object
+
+        EventRepository repo = EventRepository.getInstance(getApplicationContext());
 
         createBtn.setOnClickListener((view) -> {
             String titleStr = title.getText().toString();
@@ -55,7 +55,8 @@ public class CreateEventActivity extends AppCompatActivity {
                 return;
             }
             
-            // TODO: store the event in the repo
+            // store the event in the repo
+            repo.insertEvent(new Event(titleStr, dateStr, images.get(typeKey)));
             title.setText("");
             date.setText("");
             Toast.makeText(this, "Event Created", Toast.LENGTH_LONG).show();
