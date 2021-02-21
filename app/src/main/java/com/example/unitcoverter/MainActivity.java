@@ -10,24 +10,59 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.unitcoverter.databinding.ActivityMainBinding;
+
+import static com.example.unitcoverter.BR.viewmodel;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ActivityMainBinding binding;
+    private EditText conversionIn;
+    private TextView conversionOut;
+    public Button convert_btn;
+    public String conversionFactor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        convert_btn = findViewById(R.id.convert_btn);
 
-        Button fbtn = findViewById(R.id.convert_btn);
-        //Button kbtn = findViewById(R.id.convert_btn2);
+        MyViewModel vm = new ViewModelProvider(this, new ViewModelProvider.NewInstanceFactory()).get(MyViewModel.class);
 
-        EditText convert_input = findViewById(R.id.unit_input);
-        TextView ctxt = findViewById(R.id.unit_text);
-        //EditText pinput = findViewById(R.id.pounds_input2);
-        //TextView ktxt = findViewById(R.id.kilo_text2);
+        vm.getValue2Convert().observe(this, value -> {
+            Log.i("INFO", value);
+
+                });
+
+        vm.setConverted("99");
+
+        vm.getConverted().observe(this, done -> {
+            Log.i("INFO", done);
+        });
 
 
-      // An adapter to convert the String[] into something that can go in the Spinner
+
+
+
+       ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.setLifecycleOwner(this);
+        binding.setViewmodel(vm);
+
+
+
+        //EditText convert_input = findViewById(R.id.unit_input);
+        //TextView ctxt = findViewById(R.id.unit_text);
+
+
+
+
+        // An adapter to convert the String[] into something that can go in the Spinner
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.units, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner conversionSpinner = (Spinner) findViewById(R.id.conversion_type);
@@ -35,16 +70,29 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        fbtn.setOnClickListener(v -> {
-            String conversionFactor = (String) conversionSpinner.getSelectedItem();
-            Log.i("Info",conversionFactor);
+       convert_btn.setOnClickListener(v -> {
+           conversionFactor = (String) conversionSpinner.getSelectedItem();
+           Log.i("Info", "hello");
+           String value = vm.getValue2Convert().toString();
+           String converted = vm.getConverted().toString();
+           Log.i("INFO",("value " + value + " converted " + converted));
 
-            if (convert_input.getText().length() == 0){
-                return;}
-            if (conversionFactor.equals("Fahrenheit to Celsius")) {
-                double celcius = Converter.toCelcius(Float.parseFloat(convert_input.getText().toString()));
 
-                ctxt.setText(String.format("%.2f ºC", celcius));
+           if (vm.value2convert == null) {
+               return;
+           }
+
+           if (conversionFactor.equals("Fahrenheit to Celsius")) {
+               double celcius = Converter.toCelcius(Float.parseFloat(vm.getValue2Convert().toString()));
+               Log.i("INFO", String.valueOf(celcius))
+                       ;
+
+               //vm.setConverted(String.format("%.2f ºC", celcius));
+               vm.setConverted("555");
+
+           }
+
+                /*
             }else if (conversionFactor.equals("Pounds to Kilograms")) {
                 double kilo = Converter.toKilogram(Float.parseFloat(convert_input.getText().toString()));
                 ctxt.setText(String.format("%.2f kg", kilo));
@@ -56,8 +104,10 @@ public class MainActivity extends AppCompatActivity {
             }else if (conversionFactor.equals("Inches to Centimeters")) {
                 double cm = Converter.toCentimeters(Float.parseFloat(convert_input.getText().toString()));
                 ctxt.setText(String.format("%.2f cm", cm));
-            }
-        });
+            }*/
 
+           //     });
+
+       });
     }
 }
