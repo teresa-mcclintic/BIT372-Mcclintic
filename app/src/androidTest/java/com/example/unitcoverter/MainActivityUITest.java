@@ -34,18 +34,31 @@ public class MainActivityUITest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.example.unitcoverter", appContext.getPackageName());
     }
-    //@Test
-    /*public void canEnterPounds() {
-        onView(withId(R.id.pounds_input2)).perform(typeText("10"));
-        onView(withId(R.id.convert_btn2)).perform(click());
-        onView(withId(R.id.kilo_text2)).check(matches(withText("4.54 kg")));
-    }*/
 
     @Test
-    public void can_enter_fahrenheit() {
+    public void can_enter_value_to_convert() {
         onView(withId(R.id.unit_input)).perform(typeText("77"));
         onView(withId(R.id.convert_btn)).perform(click());
-        onView(withId(R.id.unit_text)).check(matches(withText("25.00 ºC")));
-
+        onView(withId(R.id.unit_text)).check(matches(withText("ºF is 25.0 ºC")));
+    }
+    @Test
+    public void can_select_pounds_to_kilograms(){
+        onView(withId(R.id.conversion_type)).perform(click());
+        onView(withText("Pounds to Kilograms")).perform(click());
+    }
+    @Test
+    public void can_select_fahrenheit_to_celsius(){
+        onView(withId(R.id.conversion_type)).perform(click());
+        onView(withText("Fahrenheit to Celsius")).perform(click());
+    }
+    @Test
+    public void can_select_inches_to_centimeters(){
+        onView(withId(R.id.conversion_type)).perform(click());
+        onView(withText("Inches to Centimeters")).perform(click());
+    }
+    @Test
+    public void can_select_quarts_to_liters(){
+        onView(withId(R.id.conversion_type)).perform(click());
+        onView(withText("Quarts to Liters")).perform(click());
     }
 }
